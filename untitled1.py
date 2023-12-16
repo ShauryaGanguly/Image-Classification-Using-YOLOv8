@@ -15,8 +15,12 @@ _, thresholded_image = cv2.threshold(gray_image, 200, 255, cv2.THRESH_BINARY)
 contours, _ = cv2.findContours(thresholded_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
 # Filter out small contours based on area
-min_contour_area = 1000
-filtered_contours = [cnt for cnt in contours if cv2.contourArea(cnt) > min_contour_area]
+min_contour_area = 10000
+max_contour_area = 234000
+
+for i in range(2):
+    filtered_contours = [cnt for cnt in contours if cv2.contourArea(cnt) > min_contour_area]
+    filtered_contours = [cnt for cnt in contours if cv2.contourArea(cnt) < max_contour_area]
 
 # Create an empty mask
 mask = np.zeros_like(gray_image)
@@ -31,7 +35,10 @@ extracted_image = cv2.bitwise_and(original_image, original_image, mask=mask)
 cv2.imwrite('data/test.JPEG', extracted_image)
 
 # Display the original image and the extracted image
-cv2.imshow("Original Image", original_image)
+#cv2.imshow("Original Image", original_image)
 cv2.imshow("Extracted Image", extracted_image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+
+#model.train
