@@ -66,43 +66,7 @@ final_image = cv2.bitwise_and(extracted_image, original_image, mask = mask)
 # Save the final image of ONLY the PCB
 cv2.imwrite('data/final_image.JPEG', final_image)
 
-
-
-
-
-'''
-Part 2: YOLO Training
-'''
-
-from ultralytics import YOLO
-import os
-from IPython.display import display, Image
-from IPython import display
-display.clear_output()
-
-'''
-from roboflow import Roboflow
-project = Roboflow.workspace("spudzy-y0jgr").project("Project3")
-dataset = project.version(1).download("yolov8")
-'''
-
-# Load a model
-model = YOLO('yolov8n.pt')  #load a pretrained model
-
-
-#results = model(source='data.yaml', show = True, conf=0.4, save=True)
-
-
-
-# Use the model
-model.train(data='data.yaml', epochs=2, batch = 5, imgsz = 900)  # train the model
-
-print('testing')
-metrics = model.val()  # evaluate model performance on the validation set
-results = model("data/evaluation/arduno.jpg")  # predict on an image
-path = model.export(format="onnx")  # export the model to ONNX format
-
-print('sucess!')
+cv2.imwrite('data/mask.JPEG', mask)
 
 
 
